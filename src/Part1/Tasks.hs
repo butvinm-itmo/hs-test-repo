@@ -1,10 +1,20 @@
 module Part1.Tasks where
 
-import Util(notImplementedYet)
+import Data.Fixed (mod')
+import Debug.Trace (trace)
+import Util (notImplementedYet)
 
 -- синус числа (формула Тейлора)
 mySin :: Double -> Double
-mySin = notImplementedYet
+mySin x =
+  let x' = (x + pi) `mod'` (2 * pi) - pi
+   in x'
+        - (x' ** 3 / (2 * 3))
+        + (x' ** 5 / (2 * 3 * 4 * 5))
+        - (x' ** 7 / (2 * 3 * 4 * 5 * 6 * 7))
+        + (x' ** 9 / (2 * 3 * 4 * 5 * 6 * 7 * 8 * 9))
+        - (x' ** 11 / (2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11))
+        + (x' ** 13 / (2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12 * 13))
 
 -- косинус числа (формула Тейлора)
 myCos :: Double -> Double
@@ -33,7 +43,7 @@ type Point2D = (Double, Double)
 -- рассчитайте площадь многоугольника по формуле Гаусса
 -- многоугольник задан списком координат
 shapeArea :: [Point2D] -> Double
---shapeArea points = notImplementedYet
+-- shapeArea points = notImplementedYet
 shapeArea = notImplementedYet
 
 -- треугольник задан длиной трёх своих сторон.
