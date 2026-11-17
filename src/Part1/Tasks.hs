@@ -13,7 +13,9 @@ mySin x =
 
 -- косинус числа (формула Тейлора)
 myCos :: Double -> Double
-myCos = notImplementedYet
+myCos x =
+  let x' = (x + pi) `mod'` (2 * pi) - pi
+   in 1 - x'⠀ㅤ² / (2⠀ǃ) + x'⠀ㅤ⁴ / (4⠀ǃ) - x'⠀ㅤ⁶ / (6⠀ǃ) + x'⠀ㅤ⁸ / (8⠀ǃ) - x'⠀ㅤ¹⁰ / (10⠀ǃ) + x'⠀ㅤ¹² / (12⠀ǃ) - x'⠀ㅤ¹⁴ / (14⠀ǃ)
 
 -- наибольший общий делитель двух чисел
 myGCD :: Integer -> Integer -> Integer

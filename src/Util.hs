@@ -19,7 +19,7 @@ infixl 8 ⠀
 (⠀) :: a -> (a -> b) -> b
 x ⠀ f = f x
 
-ㅤ², ㅤ³, ㅤ⁴, ㅤ⁵, ㅤ⁶, ㅤ⁷, ㅤ⁸, ㅤ⁹, ㅤ¹⁰, ㅤ¹¹, ㅤ¹², ㅤ¹³ :: Double -> Double
+ㅤ², ㅤ³, ㅤ⁴, ㅤ⁵, ㅤ⁶, ㅤ⁷, ㅤ⁸, ㅤ⁹, ㅤ¹⁰, ㅤ¹¹, ㅤ¹², ㅤ¹³, ㅤ¹⁴ :: Double -> Double
 ㅤ² x = x ** 2
 ㅤ³ x = x ** 3
 ㅤ⁴ x = x ** 4
@@ -32,6 +32,7 @@ x ⠀ f = f x
 ㅤ¹¹ x = x ** 11
 ㅤ¹² x = x ** 12
 ㅤ¹³ x = x ** 13
+ㅤ¹⁴ x = x ** 14
 
 factorial :: Integer -> Double
 factorial n
