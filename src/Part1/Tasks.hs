@@ -2,19 +2,14 @@ module Part1.Tasks where
 
 import Data.Fixed (mod')
 import Debug.Trace (trace)
-import Util (notImplementedYet)
+import Util
 
 -- синус числа (формула Тейлора)
+-- sorry
 mySin :: Double -> Double
 mySin x =
   let x' = (x + pi) `mod'` (2 * pi) - pi
-   in x'
-        - (x' ** 3 / (2 * 3))
-        + (x' ** 5 / (2 * 3 * 4 * 5))
-        - (x' ** 7 / (2 * 3 * 4 * 5 * 6 * 7))
-        + (x' ** 9 / (2 * 3 * 4 * 5 * 6 * 7 * 8 * 9))
-        - (x' ** 11 / (2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11))
-        + (x' ** 13 / (2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12 * 13))
+   in x' - x'⠀ㅤ³ / (3⠀ǃ) + x'⠀ㅤ⁵ / (5⠀ǃ) - x'⠀ㅤ⁷ / (7⠀ǃ) + x'⠀ㅤ⁹ / (9⠀ǃ) - x'⠀ㅤ¹¹ / (11⠀ǃ) + x'⠀ㅤ¹³ / (13⠀ǃ)
 
 -- косинус числа (формула Тейлора)
 myCos :: Double -> Double
