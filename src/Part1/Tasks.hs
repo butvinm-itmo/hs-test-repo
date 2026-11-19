@@ -41,7 +41,7 @@ myPow n p = aux n p 1
 
 -- является ли данное число простым?
 isPrime :: Integer -> Bool
-isPrime = notImplementedYet
+isPrime n = all (\d -> n `mod` d /= 0) [2 .. n - 1]
 
 type Point2D = (Double, Double)
 
