@@ -64,4 +64,10 @@ shapeArea ps =
 --  2, если он прямоугольный
 --  -1, если это не треугольник
 triangleKind :: Double -> Double -> Double -> Integer
-triangleKind a b c = notImplementedYet
+triangleKind a b c =
+  if a + b < c || b + c < a || c + a < b
+    then -1
+    else
+      let h = maximum [a, b, c]
+          m = 2 * h * h - a * a - b * b - c * c
+       in if abs m <= 0.0001 then 2 else if m < 0 then 1 else 0
