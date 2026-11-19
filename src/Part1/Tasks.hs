@@ -25,7 +25,10 @@ myGCD a b = myGCD b (a `mod` b)
 -- является ли дата корректной с учётом количества дней в месяце и
 -- вискокосных годов?
 isDateCorrect :: Integer -> Integer -> Integer -> Bool
-isDateCorrect = notImplementedYet
+isDateCorrect d 2 y | (y `mod` 400 == 0) || (y `mod` 100 /= 0 && y `mod` 4 == 0) = (1 <= d) && (d <= 29)
+isDateCorrect d 2 y = (1 <= d) && (d <= 28)
+isDateCorrect d m y | m `elem` [1, 3, 5, 7, 8, 10, 12] = (1 <= d) && (d <= 31)
+isDateCorrect d m y = (1 <= d) && (d <= 30)
 
 -- возведение числа в степень, duh
 -- готовые функции и плавающую арифметику использовать нельзя
