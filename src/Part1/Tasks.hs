@@ -19,7 +19,8 @@ myCos x =
 
 -- наибольший общий делитель двух чисел
 myGCD :: Integer -> Integer -> Integer
-myGCD = notImplementedYet
+myGCD a 0 = abs a
+myGCD a b = myGCD b (a `mod` b)
 
 -- является ли дата корректной с учётом количества дней в месяце и
 -- вискокосных годов?
