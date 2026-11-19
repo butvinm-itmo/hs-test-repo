@@ -33,7 +33,11 @@ isDateCorrect d m y = (1 <= d) && (d <= 30)
 -- возведение числа в степень, duh
 -- готовые функции и плавающую арифметику использовать нельзя
 myPow :: Integer -> Integer -> Integer
-myPow = notImplementedYet
+myPow n p = aux n p 1
+  where
+    aux n p r = case p of
+      0 -> r
+      _ -> aux (n * n) (p `div` 2) (if p `mod` 2 == 0 then r else r * n)
 
 -- является ли данное число простым?
 isPrime :: Integer -> Bool
