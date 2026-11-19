@@ -48,8 +48,14 @@ type Point2D = (Double, Double)
 -- рассчитайте площадь многоугольника по формуле Гаусса
 -- многоугольник задан списком координат
 shapeArea :: [Point2D] -> Double
--- shapeArea points = notImplementedYet
-shapeArea = notImplementedYet
+shapeArea ps =
+  case ps of
+    [] -> 0
+    (h : t) ->
+      let shifted = (t ++ [h])
+          l = foldl (\a (x, y) -> a + x * y) 0 (zip (map fst ps) (map snd shifted))
+          r = foldl (\a (x, y) -> a - x * y) 0 (zip (map fst shifted) (map snd ps))
+       in 1 / 2 * abs (l + r)
 
 -- треугольник задан длиной трёх своих сторон.
 -- функция должна вернуть
