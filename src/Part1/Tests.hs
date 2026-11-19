@@ -4,8 +4,10 @@ import Part1.Tasks
 
 import Test.Tasty.HUnit
 import Test.Tasty.QuickCheck
+import Control.Exception (ErrorCall, evaluate, try)
 import Control.Monad (unless)
 import GHC.Stack (HasCallStack)
+import System.Timeout (timeout)
 import Util(assertFalse)
 
 nearlyEqual x y = abs (x - y) <= 0.0001
@@ -51,6 +53,14 @@ unit_isDateCorrect = do
     isDateCorrect 29 02 1900 @?= False
     isDateCorrect 29 02 2000 @?= True
     isDateCorrect 29 02 2008 @?= True
+    isDateCorrect 29 02 (-1970) @?= False
+    isDateCorrect 29 02 (-1900) @?= False
+    isDateCorrect 29 02 (-2000) @?= True
+    isDateCorrect 29 02 (-2008) @?= True
+    isDateCorrect 1 13 2026 @?= False
+    isDateCorrect 1 12 (-2026) @?= True
+    isDateCorrect 1 (-12) 2026 @?= False
+    isDateCorrect (-1) 12 2026 @?= False
 
 prop_isDateCorrect year =
     False === isDateCorrect 30 02 year
@@ -62,6 +72,7 @@ unit_myPow = do
     myPow 23 0 @?= 1
     myPow 2 10 @?= 1024
     myPow 2 5 @?= 32
+    myPow 2 (-5) @?= 0
 
 prop_myPow =
     zeroExp .&&. oneExp .&&. general
@@ -77,6 +88,9 @@ unit_isPrime = do
     assertBool "not isPrime 8" $ not $ isPrime 8
     assertBool "not isPrime 121" $ not $ isPrime 121
     assertBool "not isPrime 34" $ not $ isPrime 34
+    assertBool "not isPrime 1" $ not $ isPrime 1
+    assertBool "not isPrime 0" $ not $ isPrime 0
+    assertBool "not isPrime (-1)" $ not $ isPrime (-1)
 
 unit_shapeArea = do
     shapeArea [(0, 0), (0, 1), (1, 1), (1, 0)] @?=~ 1
@@ -101,7 +115,8 @@ prop_shapeArea (x, y) w h =
 unit_triangleKind =
     do
         triangleKind 3.0 7.5 4.0 @?= (-1)
+        triangleKind 1 2 3 @?= (-1)
+        triangleKind 0.001 0.001 0.001 @?= 1
         triangleKind 5.0 3.0 4.0 @?= 2 -- это прямоугольный треугольник
         triangleKind 4.0 6.0 8.0 @?= 0 -- это тупоугольный треугольник
         triangleKind 1.0 1.5 1.5 @?= 1 -- это остроугольный треугольник
-

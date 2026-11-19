@@ -1,6 +1,7 @@
 module Part1.Tasks where
 
 import Data.Fixed (mod')
+import Data.List (sort)
 import Debug.Trace (trace)
 import Util
 
@@ -25,14 +26,18 @@ myGCD a b = myGCD b (a `mod` b)
 -- является ли дата корректной с учётом количества дней в месяце и
 -- вискокосных годов?
 isDateCorrect :: Integer -> Integer -> Integer -> Bool
+isDateCorrect d m y | d <= 0 || m <= 0 = False
 isDateCorrect d 2 y | (y `mod` 400 == 0) || (y `mod` 100 /= 0 && y `mod` 4 == 0) = (1 <= d) && (d <= 29)
 isDateCorrect d 2 y = (1 <= d) && (d <= 28)
 isDateCorrect d m y | m `elem` [1, 3, 5, 7, 8, 10, 12] = (1 <= d) && (d <= 31)
-isDateCorrect d m y = (1 <= d) && (d <= 30)
+isDateCorrect d m y | m `elem` [4, 6, 9, 11] = (1 <= d) && (d <= 30)
+isDateCorrect d m y = False
 
 -- возведение числа в степень, duh
 -- готовые функции и плавающую арифметику использовать нельзя
+-- 0 for negative pow (simpler to test then just rejecting such argument)
 myPow :: Integer -> Integer -> Integer
+myPow n p | p < 0 = 0
 myPow n p = aux n p 1
   where
     aux n p r = case p of
@@ -41,6 +46,7 @@ myPow n p = aux n p 1
 
 -- является ли данное число простым?
 isPrime :: Integer -> Bool
+isPrime n | n < 2 = False
 isPrime n = all (\d -> n `mod` d /= 0) [2 .. n - 1]
 
 type Point2D = (Double, Double)
@@ -48,14 +54,11 @@ type Point2D = (Double, Double)
 -- рассчитайте площадь многоугольника по формуле Гаусса
 -- многоугольник задан списком координат
 shapeArea :: [Point2D] -> Double
-shapeArea ps =
-  case ps of
-    [] -> 0
-    (h : t) ->
-      let shifted = (t ++ [h])
-          l = foldl (\a (x, y) -> a + x * y) 0 (zip (map fst ps) (map snd shifted))
-          r = foldl (\a (x, y) -> a - x * y) 0 (zip (map fst shifted) (map snd ps))
-       in 1 / 2 * abs (l + r)
+shapeArea [] = 0
+shapeArea points@(h : t) = abs (sum (zipWith cross points shifted)) / 2
+  where
+    shifted = (t ++ [h])
+    cross (x1, y1) (x2, y2) = x1 * y2 - y1 * x2
 
 -- треугольник задан длиной трёх своих сторон.
 -- функция должна вернуть
@@ -65,9 +68,13 @@ shapeArea ps =
 --  -1, если это не треугольник
 triangleKind :: Double -> Double -> Double -> Integer
 triangleKind a b c =
-  if a + b < c || b + c < a || c + a < b
+  if x <= 0 || x <= z - y
     then -1
     else
-      let h = maximum [a, b, c]
-          m = 2 * h * h - a * a - b * b - c * c
-       in if abs m <= 0.0001 then 2 else if m < 0 then 1 else 0
+      let -- normalize to make the tolerance independent of the sides length
+          x' = x / z
+          y' = y / z
+          m = 1 - x' * x' - y' * y'
+       in if abs m <= 1e-12 then 2 else if m < 0 then 1 else 0
+  where
+    [x, y, z] = sort [a, b, c]
